@@ -6,20 +6,23 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Models\Mahasiswa;
+use App\Models\MataKuliah;
 use App\Models\Prodi;
 
 class MahasiswaController extends Controller
 {
     public function index() {
         // $mahasiswas = Mahasiswa::latest()->paginate(10);
-        $mahasiswas = Mahasiswa::with('prodi')->get();
+        $mahasiswas = Mahasiswa::with('prodi', 'mataKuliahs')->get();
 
         return view('mahasiswas.index', compact('mahasiswas'));
     }
 
     public function create() {
         $prodis = Prodi::orderBy('nama')->get();
-        return view('mahasiswas.create', compact('prodis'));
+        $mataKuliahs = MataKuliah::orderBy('nama')->get();
+
+        return view('mahasiswas.create', compact('prodis', 'mataKuliahs'));
     }
 
     public function store(Request $request) {
@@ -29,14 +32,17 @@ class MahasiswaController extends Controller
             // 'prodi' => 'required',
             'prodi_id' => 'required',
             'tahun_angkatan' => 'required',
+            'mata_kuliahs' => 'array',
         ]);
 
-        Mahasiswa::create([
+        $mahasiswa = Mahasiswa::create([
             'nim' => $request->nim,
             'nama' => $request->nama,
             'prodi_id' => $request->prodi_id,
             'tahun_angkatan' => $request->tahun_angkatan,
         ]);
+
+        $mahasiswa->mataKuliahs()->attach($request->mata_kuliahs);
 
         return redirect()->route('mahasiswas.index');
     }
@@ -44,8 +50,9 @@ class MahasiswaController extends Controller
     public function edit(string $id) {
         $mahasiswa = Mahasiswa::findOrFail($id);
         $prodis = Prodi::orderBy('nama')->get();
+        $mataKuliahs = MataKuliah::orderBy('nama')->get();
 
-        return view('mahasiswas.edit', compact('mahasiswa', 'prodis'));
+        return view('mahasiswas.edit', compact('mahasiswa', 'prodis', 'mataKuliahs'));
     }
 
     public function update(Request $request, $id) {
@@ -55,6 +62,7 @@ class MahasiswaController extends Controller
             // 'prodi' => 'required',
             'prodi_id' => 'required',
             'tahun_angkatan' => 'required',
+            'mata_kuliahs' => 'array',
         ]);
 
         $mahasiswa = Mahasiswa::findOrFail($id);
@@ -65,6 +73,8 @@ class MahasiswaController extends Controller
             'prodi_id' => $request->prodi_id,
             'tahun_angkatan' => $request->tahun_angkatan,
         ]);
+
+        $mahasiswa->mataKuliahs()->sync($request->mata_kuliahs);
 
         return redirect()->route('mahasiswas.index');
     }

@@ -22,6 +22,13 @@
             </option>
             @endforeach
         </select>
+        <select name="mata_kuliahs[]" class="form_select">
+            @foreach($mataKuliahs as $mk)
+            <option value="{{ $mk->id }}">
+                {{ $mk->nama }}
+            </option>
+            @endforeach
+        </select>
         <input type="text" name="tahun_angkatan" placeholder="Tahun Angkatan">
         <button type="submit">Tambah Mahasiswa</button>
     </form>

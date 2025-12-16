@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Prodi;
+use App\Models\Matakuliah;
 
 class Mahasiswa extends Model
 {
@@ -21,4 +22,12 @@ class Mahasiswa extends Model
     {
         return $this->belongsTo(Prodi::class);
     }
+
+    public function mataKuliahs()
+    {
+        return $this->belongsToMany(MataKuliah::class, 'mahasiswa_mata_kuliah')
+            ->withPivot('semester')
+            ->withTimestamps();
+    }
+    
 }

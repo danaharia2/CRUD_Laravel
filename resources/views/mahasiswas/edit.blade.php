@@ -24,6 +24,14 @@
             </option>
             @endforeach
         </select>
+        <select name="mata_kuliahs[]" class="form_select" multiple>
+            @foreach($mataKuliahs as $mk)
+            <option value="{{ $mk->id }}"
+                {{ $mahasiswa->mataKuliahs->contains($mk->id) ? 'select' : ''}}>
+                {{ $mk->nama }}
+            </option>
+            @endforeach
+        </select>
         <input type="text" name="tahun_angkatan" value="{{ old('tahun_angkatan', $mahasiswa->tahun_angkatan) }}" placeholder="Tahun Angkatan">
         <button type="submit">Update Mahasiswa</button>
         <button type="reset">Reset Mahasiswa</button>
