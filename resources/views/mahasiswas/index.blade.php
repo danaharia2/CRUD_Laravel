@@ -31,6 +31,12 @@
                 <th>Nim</th>
                 <th>Nama</th>
                 <th>Prodi</th>
+                <th>Alamat</th>
+                <th>No Hp</th>
+                <th>Email</th>
+                <th>Nama Orang Tua</th>
+                <th>Tanggal Lahir</th>
+                <th>Tempat Lahir</th>
                 <th>Mata Kuliah</th>
                 <th>Tahun Angkatan</th>
                 <th>Action</th>
@@ -44,6 +50,12 @@
                 <td>{{ $mahasiswa->nama }}</td>
                 {{-- <td>{{ $mahasiswa->prodi }}</td> --}}
                 <td>{{ $mahasiswa->prodi->nama }}</td>
+                <td>{{ $mahasiswa->detailMahasiswa->alamat ?? '-' }}</td>
+                <td>{{ $mahasiswa->detailMahasiswa->no_hp ?? '-'}}</td>
+                <td>{{ $mahasiswa->detailMahasiswa->email_pribadi ?? '-' }}</td>
+                <td>{{ $mahasiswa->detailMahasiswa->nama_orang_tua ?? '-' }}</td>
+                <td>{{ $mahasiswa->detailMahasiswa->tanggal_lahir ?? '-' }}</td>
+                <td>{{ $mahasiswa->detailMahasiswa->tempat_lahir ?? '-' }}</td>
                 <td>
                     @foreach($mahasiswa->mataKuliahs as $mk)
                     <span class="badge bg-primary">{{ $mk->nama }}</span>
