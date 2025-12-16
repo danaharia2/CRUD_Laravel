@@ -17,8 +17,8 @@
         {{-- <input type="text" name="prodi" placeholder="Prodi"> --}}
         <select name="prodi_id" class="form_select">
             @foreach($prodis as $prodi)
-            <option value="{{ $prodis->id }}">
-                {{ $prodis->nama }}
+            <option value="{{ $prodi->id }}">
+                {{ $prodi->nama }}
             </option>
             @endforeach
         </select>
