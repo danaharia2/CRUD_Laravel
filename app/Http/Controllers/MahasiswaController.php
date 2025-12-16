@@ -6,31 +6,35 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Models\Mahasiswa;
+use App\Models\Prodi;
 
 class MahasiswaController extends Controller
 {
     public function index() {
-        $mahasiswas = Mahasiswa::latest()->paginate(10);
+        // $mahasiswas = Mahasiswa::latest()->paginate(10);
+        $mahasiswas = Mahasiswa::with('prodi')->get();
 
         return view('mahasiswas.index', compact('mahasiswas'));
     }
 
     public function create() {
-        return view('mahasiswas.create');
+        $prodis = Prodi::orderBy('nama')->get();
+        return view('mahasiswas.create', compact('prodis'));
     }
 
     public function store(Request $request) {
         $request->validate([
             'nim' => 'required',
             'nama' => 'required',
-            'prodi' => 'required',
+            // 'prodi' => 'required',
+            'prodi_id' => 'required',
             'tahun_angkatan' => 'required',
         ]);
 
         Mahasiswa::create([
             'nim' => $request->nim,
             'nama' => $request->nama,
-            'prodi' => $request->prodi,
+            'prodi_id' => $request->prodi_id,
             'tahun_angkatan' => $request->tahun_angkatan,
         ]);
 
@@ -39,15 +43,17 @@ class MahasiswaController extends Controller
 
     public function edit(string $id) {
         $mahasiswa = Mahasiswa::findOrFail($id);
+        $prodis = Prodi::orderBy('nama')->get();
 
-        return view('mahasiswas.edit', compact('mahasiswa'));
+        return view('mahasiswas.edit', compact('mahasiswa', 'prodis'));
     }
 
     public function update(Request $request, $id) {
         $request->validate([
             'nim' => 'required',
             'nama' => 'required',
-            'prodi' => 'required',
+            // 'prodi' => 'required',
+            'prodi_id' => 'required',
             'tahun_angkatan' => 'required',
         ]);
 
@@ -56,7 +62,7 @@ class MahasiswaController extends Controller
         $mahasiswa->update([
             'nim' => $request->nim,
             'nama' => $request->nama,
-            'prodi' => $request->prodi,
+            'prodi_id' => $request->prodi_id,
             'tahun_angkatan' => $request->tahun_angkatan,
         ]);
 

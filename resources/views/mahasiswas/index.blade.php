@@ -25,7 +25,8 @@
             <tr>
                 <td>{{ $mahasiswa->nim }}</td>
                 <td>{{ $mahasiswa->nama }}</td>
-                <td>{{ $mahasiswa->prodi }}</td>
+                {{-- <td>{{ $mahasiswa->prodi }}</td> --}}
+                <td>{{ $mahasiswa->prodi->nama }}</td>
                 <td>{{ $mahasiswa->tahun_angkatan }}</td>
                 <td>
                     <form onsubmit="return confirm('Apakah Anda Yakin Dihapus ?');" action="{{ route('mahasiswas.destroy', $mahasiswa->id) }}" method="POST">

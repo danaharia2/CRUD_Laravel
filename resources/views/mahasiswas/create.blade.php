@@ -14,7 +14,14 @@
         @csrf
         <input type="text" name="nim" placeholder="Nim Mahasiswa">
         <input type="text" name="nama" placeholder="Nama Mahasiswa">
-        <input type="text" name="prodi" placeholder="Prodi">
+        {{-- <input type="text" name="prodi" placeholder="Prodi"> --}}
+        <select name="prodi_id" class="form_select">
+            @foreach($prodis as $prodi)
+            <option value="{{ $prodis->id }}">
+                {{ $prodis->nama }}
+            </option>
+            @endforeach
+        </select>
         <input type="text" name="tahun_angkatan" placeholder="Tahun Angkatan">
         <button type="submit">Tambah Mahasiswa</button>
     </form>

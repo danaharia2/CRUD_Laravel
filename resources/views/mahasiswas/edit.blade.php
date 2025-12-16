@@ -15,7 +15,15 @@
         @method('PUT')
         <input type="text" name="nim" value="{{ old('nim', $mahasiswa->nim) }}" placeholder="Nim Mahasiswa">
         <input type="text" name="nama" value="{{ old('nama', $mahasiswa->nama) }}" placeholder="Nama Mahasiswa">
-        <input type="text" name="prodi" value="{{ old('prodi', $mahasiswa->prodi) }}" placeholder="Prodi">
+        {{-- <input type="text" name="prodi" value="{{ old('prodi', $mahasiswa->prodi) }}" placeholder="Prodi"> --}}
+        <select name="prodi_id" class="form_select">
+            @foreach($prodis as $prodi)
+            <option value="{{ $prodi->id }}"
+                {{ old('prodi_id', $mahasiswa->prodi_id) == $prodi->id ? 'select' : ''}}>
+                {{ $prodi->nama }}
+            </option>
+            @endforeach
+        </select>
         <input type="text" name="tahun_angkatan" value="{{ old('tahun_angkatan', $mahasiswa->tahun_angkatan) }}" placeholder="Tahun Angkatan">
         <button type="submit">Update Mahasiswa</button>
         <button type="reset">Reset Mahasiswa</button>
